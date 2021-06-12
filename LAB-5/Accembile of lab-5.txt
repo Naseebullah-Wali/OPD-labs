@@ -1,0 +1,34 @@
+ORG  0x238
+START:  WORD  $LEN
+ADDR:  WORD  0
+NOW:  WORD  0
+BEGIN:  CLA
+   LD  START
+   ST  ADDR
+FIRST_1:  IN  5
+   AND  #0x40
+    BEQ  FIRST_1
+    IN   4
+    ST   NOW
+SECOND_2:  CLA 
+    IN   5
+    AND   #0x40
+   BEQ  SECOND_2
+   IN  4
+   ST   (ADDR)
+    LOOP   NOW
+    JUMP   THIRD_3
+    JUMP   STOP
+THIRD_3:  CLA 
+    IN   5
+    AND   #0x40
+    BEQ   THIRD_3 
+    IN   4
+    SWAB
+    OR   (ADDR)
+    ST   (ADDR)+
+    LOOP   NOW
+    JUMP   SECOND_2
+STOP:  HLT
+ORG    0x56E
+LEN:    WORD   ?
